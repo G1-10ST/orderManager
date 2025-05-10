@@ -5,12 +5,12 @@ A Spring Boot project for managing orders. This project demonstrates REST APIs u
 ## Features
 - Order management APIs
 - OpenAPI 3.0 (Swagger UI) integration
-- Java 21 and Spring Boot 3.3.x
+- Java 21 and Spring Boot 3.4.3
 - Maven build support
 
 ## Tech Stack
 - Java 21
-- Spring Boot 3.3.x
+- Spring Boot 3.4.3
 - SpringDoc OpenAPI
 - Maven
 
@@ -18,7 +18,7 @@ A Spring Boot project for managing orders. This project demonstrates REST APIs u
 
 ### Prerequisites
 - Java 21
-- Maven 3.x
+- Maven 3.6.3
 
 ### Running the Application
 ```bash
