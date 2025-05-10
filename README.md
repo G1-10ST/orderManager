@@ -18,7 +18,7 @@ A Spring Boot project for managing orders. This project demonstrates REST APIs u
 
 ### Prerequisites
 - Java 21
-- Maven 3.6.3
+- Maven 3.9.9
 
 ### Running the Application
 ```bash
