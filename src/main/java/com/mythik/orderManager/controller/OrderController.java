@@ -56,12 +56,16 @@ public class OrderController {
             @RequestParam Long orderId,
             @RequestParam Long productId) {
         OrderResponse updated = orderService.removeProduct(orderId, productId);
-        return ResponseEntity.ok(updated);
+        return ResponseEntity
+                .status(OK)
+                .body(updated);
     }
 
     @PostMapping("/updateStatus")
     public ResponseEntity<OrderResponse> updateStatus(@RequestParam @Valid OrderStatus status,
                                                       @RequestParam @Valid Long orderId) {
-        return ResponseEntity.ok(orderService.updateStatus(orderId, status));
+        return ResponseEntity
+                .status(OK)
+                .body(orderService.updateStatus(orderId, status));
     }
 }

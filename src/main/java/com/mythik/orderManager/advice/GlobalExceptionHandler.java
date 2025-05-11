@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 
+import static com.mythik.orderManager.constants.CommonConstants.*;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 @ControllerAdvice
@@ -27,8 +28,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 ErrorResponse.builder()
                         .fieldErrors(fieldErrors)
-                        .code("OM-400")
-                        .message("Validation Failure")
+                        .code(OM_ARGUMENT_NOT_VALID_CODE)
+                        .message(VALIDATION_FAILURE_MESSAGE)
                         .build(),
                 ex.getStatusCode()
         );
@@ -40,7 +41,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(
                 ErrorResponse.builder()
-                        .code("OM-401")
+                        .code(OM_RESOURCE_NOT_FOUND_CODE)
                         .message(ex.getMessage())
                         .build(),
                 HttpStatus.NOT_FOUND

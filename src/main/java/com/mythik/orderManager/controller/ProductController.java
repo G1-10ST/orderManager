@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -29,7 +30,7 @@ public class ProductController {
     @PostMapping("/addProduct")
     public ResponseEntity<Product> addProduct(@RequestBody @Valid ProductRequest request) {
         return ResponseEntity
-                .status(OK)
+                .status(CREATED)
                 .body(productServiceImpl.addProduct(request));
     }
 

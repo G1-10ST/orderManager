@@ -59,8 +59,8 @@ public class Order {
     }
 
     public void removeProduct(Product product) {
-        orderItems.removeIf(oi -> oi.getProduct().equals(product));
-        product.getOrderItems().removeIf(oi -> oi.getOrder().equals(this));
+        orderItems.removeIf(item -> item.getProduct().getId().equals(product.getId()));
+        product.getOrderItems().removeIf(item -> item.getOrder().id.equals(id));
     }
 
 }

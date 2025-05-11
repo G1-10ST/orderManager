@@ -40,6 +40,6 @@ public class ProductServiceImpl implements ProductService {
         existing.setDescription(dto.getDescription());
         existing.setPrice(dto.getPrice());
 
-        return existing;
+        return productRepository.save(existing);
     }
 }

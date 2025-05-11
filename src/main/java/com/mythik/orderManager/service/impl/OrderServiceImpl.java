@@ -21,15 +21,15 @@ import java.util.Optional;
 @AllArgsConstructor
 @Transactional
 public class OrderServiceImpl implements OrderService {
-    private final OrderRepository orderRepo;
-    private final ProductRepository productRepo;
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
     private final OrderItemRepository itemRepository;
 
     @Override
     @Transactional(readOnly = true)
     public List<OrderResponse> fetchAllOrders() {
 
-        List<Order> orders = orderRepo.findAll();
+        List<Order> orders = orderRepository.findAll();
         return orders.stream()
                 .map(this::buildOrderResponse)
                 .toList();
@@ -43,23 +43,23 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
 
-        for (var item : request.getItems()) {
-            Product product = productRepo.findById(item.getProductId())
+        for (OrderItemDto item : request.getItems()) {
+            Product product = productRepository.findById(item.getProductId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
             order.addProduct(product, item.getQuantity());
         }
 
-        order = orderRepo.save(order);
+        order = orderRepository.save(order);
         return buildOrderResponse(order);
     }
 
     @Override
     public OrderResponse addProduct(Long orderId, OrderItemDto dto) {
-        Order order = orderRepo.findById(orderId)
+        Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found: " + orderId));
 
-        Product product = productRepo.findById(dto.getProductId())
+        Product product = productRepository.findById(dto.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + dto.getProductId()));
 
         OrderItemId key = new OrderItemId(orderId, product.getId());
@@ -74,33 +74,35 @@ public class OrderServiceImpl implements OrderService {
                     .quantity(dto.getQuantity())
                     .priceOfProduct(product.getPrice())
                     .build();
+
             order.getOrderItems().add(item);
         }
 
-        Order saved = orderRepo.save(order);
-        return buildOrderResponse(saved);
+        Order updated = orderRepository.save(order);
+        return buildOrderResponse(updated);
     }
 
+    @Override
     public OrderResponse removeProduct(Long orderId, Long productId) {
-        Order order = orderRepo.findById(orderId)
+        Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found: " + orderId));
 
-        Product product = productRepo.findById(productId)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + productId));
 
         order.removeProduct(product);
-        Order updated = orderRepo.save(order);
+        Order updated = orderRepository.save(order);
 
         return buildOrderResponse(updated);
     }
 
     @Override
     public OrderResponse updateStatus(Long id, OrderStatus status) {
-        Order order = orderRepo.findById(id)
+        Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found: " + id));
 
         order.setStatus(status);
-        Order updated = orderRepo.save(order);
+        Order updated = orderRepository.save(order);
 
         return buildOrderResponse(updated);
     }

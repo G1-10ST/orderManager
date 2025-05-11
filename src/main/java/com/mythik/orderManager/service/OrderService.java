@@ -1,6 +1,5 @@
 package com.mythik.orderManager.service;
 
-import com.mythik.orderManager.model.entity.Order;
 import com.mythik.orderManager.model.enums.OrderStatus;
 import com.mythik.orderManager.model.request.OrderItemDto;
 import com.mythik.orderManager.model.request.OrderRequest;
